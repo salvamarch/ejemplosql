@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-EditText nombre, apellidos,nota;
+EditText nombre, apellidos,nota, id;
 Button insertar;
 Button listar;
+Button bor;
+Button act;
 MiBaseDeDatos baseDeDatos;
 ListView lista;
     @Override
@@ -26,8 +28,11 @@ ListView lista;
         nombre = findViewById(R.id.editTextNombre);
         apellidos = findViewById(R.id.editTextApellidos);
         nota = findViewById(R.id.editTextNota);
+        id=findViewById(R.id.id);
         insertar = findViewById(R.id.button);
         listar=findViewById(R.id.bt2);
+        bor=findViewById(R.id.bor);
+        act=findViewById(R.id.act);
         lista=findViewById(R.id.lista);
         baseDeDatos=new MiBaseDeDatos(this);
         insertar.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +76,27 @@ ListView lista;
                }else{
                    Toast.makeText(MainActivity.this, "Vacio", Toast.LENGTH_SHORT).show();
                }
+            }
+        });
+
+        bor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean resultado=baseDeDatos.borrar(id.getText().toString());
+                if(resultado){
+                    Toast.makeText(MainActivity.this, "Borrado correctamente", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(MainActivity.this, "Nada que borrar", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        act.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean res=baseDeDatos.actualizar(id.getText().toString(),
+                        nombre.getText().toString(), apellidos.getText().toString(), nota.getText().toString());
+
             }
         });
     }

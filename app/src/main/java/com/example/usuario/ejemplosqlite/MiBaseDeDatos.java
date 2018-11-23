@@ -52,4 +52,24 @@ class MiBaseDeDatos extends SQLiteOpenHelper {
         Cursor datos=db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return datos;
     }
+
+    public boolean borrar(String id){
+        SQLiteDatabase db=this.getWritableDatabase();
+        int filasborradas=db.delete(TABLE_NAME, COL_1 + "=?", new  String[]{id});
+        db.close();
+        return (filasborradas>0);
+    }
+
+    public boolean actualizar(String id, String nombre, String apellidos, String nota){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues contentValues;
+        contentValues=new ContentValues();
+        contentValues.put(COL_2, nombre);
+        contentValues.put(COL_3, apellidos);
+        contentValues.put(COL_4, nota);
+        int filasafectadas=db.update(TABLE_NAME, contentValues, COL_1+"=?", new String[]{id});
+        //db.close();
+        return (filasafectadas>0);
+
+    }
 }
